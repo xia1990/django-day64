@@ -18,7 +18,7 @@ from django.conf.urls import url
 from app01 import views
 
 urlpatterns = [
-    # url('',views.index,name='index'),
+    url('^index/',views.index,name='index'),
     url('^publisher_list/',views.publisher_list,name="publisher_list"),
     url('^add_publisher/',views.add_publisher,name="add_publisher"),
     url('^delete_publisher/',views.delete_publisher,name="delete_publisher"),
