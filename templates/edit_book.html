@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>编辑图书</title>
+</head>
+<body>
+    <h1>编辑图书</h1>
+    <form action="/edit_book/" method="post">
+        <input type="text" name="id" style="display: none" value="{{ book.bid }}">
+        <p>
+            图书名称：
+            <input type="text" name="name" value="{{ book.bname }}">
+        </p>
+        <p>
+            出版社名称：
+            <select name="publisher">
+                {% for publisher in publisher_list %}
+                    #如果图书出版社的编号对应当前的出版社编号，让其选中
+                    {% if book.publisher.pid == publisher.pid %}
+                        <option value="{{ publisher.pid }}" selected>{{ publisher.pname }}</option>
+                    {% else %}
+                        <option value="{{ publisher.pid }}">{{ publisher.pname }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </p>
+        <p>
+            <input type="submit" value="提交">
+        </p>
+    </form>
+</body>
+</html>
