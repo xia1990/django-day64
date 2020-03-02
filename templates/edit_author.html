@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <title>编辑作者</title>
+    <style>
+        #edit_publisher {
+            margin-top: 20px;
+        }
+        #d1{
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row panel panel-primary" id="d1">
+        <div class="panel-heading text-center">编辑作者界面</div>
+        <div class="col-md-4 col-md-offset-4">
+            <form id="edit_author" class="form-horizontal" action="/edit_author/" method="post">
+                <div class="form-group">
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="aid" style="display: none" value="{{ author.aid }}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">作者名称：</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="aname" value="{{ author.aname }}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">作者作品：</label>
+                    <div class="col-sm-8">
+                        <select multiple class="form-control" name="book_list">
+                            {% for book in book_list %}
+                                {% if book in author.book.all %}
+                                    <option selected value="{{ book.bid }}">{{ book.bname }}</option>
+                                {% else %}
+                                    <option  value="{{ book.bid }}">{{ book.bname }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-8">
+                        <button type="submit" class="btn btn-primary">编辑</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>

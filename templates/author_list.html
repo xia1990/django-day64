@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-    <title>出版社列表</title>
+    <title>作者列表</title>
     <style>
         #add {
             color: white;
@@ -18,32 +18,38 @@
 <div class="container">
     <div class="panel panel-primary" id="d1">
         <div class="panel-heading text-center">
-            出版社列表界面
+            作者列表界面
         </div>
         <table class="table table-bordered">
             <thead>
             <tr>
                 <th>编号</th>
-                <th>出版社ID</th>
-                <th>出版社名称</th>
+                <th>作者编号</th>
+                <th>作者名称</th>
+                <th>作品</th>
                 <th>操作</th>
             </tr>
             </thead>
-            {% for publisher in publisher_list %}
+            {% for author in author_list %}
                 <tbody>
                 <tr>
                     <td>{{ forloop.counter }}</td>
-                    <td>{{ publisher.pid }}</td>
-                    <td>{{ publisher.pname }}</td>
+                    <td>{{ author.aid }}</td>
+                    <td>{{ author.aname }}</td>
+                    <td>
+                        {% for book in author.book.all %}
+                            {{ book.bname }}|
+                        {% endfor %}
+                    </td>
                     <td>
                         <button type="button" class="btn btn-primary">
-                            <a id="add" href="/add_publisher/">添加</a>
-                        </button>
-                        <button type="button" class="btn btn-danger">
-                            <a id="add" href="/delete_publisher/?pid={{ publisher.pid }}">删除</a>
+                            <a id="add" href="/add_author/">添加</a>
                         </button>
                         <button type="button" class="btn btn-primary">
-                            <a id="add" href="/edit_publisher/?pid={{ publisher.pid }}">编辑</a>
+                            <a id="add" href="/delete_author/?aid={{ author.aid }}">删除</a>
+                        </button>
+                        <button type="button" class="btn btn-primary">
+                            <a id="add" href="/edit_author/?aid={{ author.aid }}">编辑</a>
                         </button>
                     </td>
                 </tr>

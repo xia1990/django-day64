@@ -134,4 +134,63 @@ def edit_book(request):
         #返回修改后的图书页面
         return redirect("/book_list/")
 
+#作者列表
+def author_list(request):
+    #得到数据库中所有作者
+    author_all=models.Author.objects.all()
+    return render(request,"author_list.html",{"author_list":author_all})
 
+#添加作者
+def add_author(request):
+    if request.method=="POST":
+        #要添加的作者名称
+        new_aname=request.POST.get("aname")
+        #要添加的书籍对象
+        books=request.POST.getlist("books")
+        print("---"*20)
+        print(books)
+        #创建新作者
+        new_author=models.Author.objects.create(aname=new_aname)
+        #设置书籍和作者的对应关系
+        new_author.book.set(books)
+        return redirect("/author_list/")
+    else:
+        #从数据库中查出所有书籍
+        b_list=models.Book.objects.all()
+        #得到要添加作者名称
+        return render(request,"add_author.html",{"book_list":b_list})
+
+#删除作者
+def delete_author(request):
+    #要删除作者的ID
+    del_aid=request.GET.get("aid")
+    models.Author.objects.get(aid=del_aid).delete()
+    return redirect("/author_list/")
+
+#编辑作者
+def edit_author(request):
+    if request.method=="POST":
+        #修改的作者新名称
+        new_aname=request.POST.get("aname")
+        #修改的作者编号
+        e_aid=request.POST.get("aid")
+        #得到当前修改作者的作品
+        new_books=request.POST.getlist("book_list")
+        #得到要修改作者对象
+        new_author=models.Author.objects.get(aid=e_aid)
+        #更新作者名称
+        new_author.aname=new_aname
+        #更新作者作品
+        new_author.book.set(new_books)
+        #更新数据库
+        new_author.save()
+        return redirect("/author_list/")
+
+    else:
+        #查询数据库中的所有书籍
+        b_list=models.Book.objects.all()
+        #得到编辑的作者ID
+        edit_aid=request.GET.get("aid")
+        #要编辑作者对象
+        edit_author=models.Author.objects.get(aid=edit_aid)
+        return render(request,"edit_author.html",{"book_list":b_list,'author':edit_author})
