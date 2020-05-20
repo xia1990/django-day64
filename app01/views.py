@@ -41,6 +41,18 @@ def delete_publisher(request):
     else:
         return HttpResponse("id不存在！")
 
+#删除出版社
+def delete_publisher2(request,d_id):
+    if d_id:
+        #通过ID得到出版社对象
+        d_obj=models.Publisher.objects.get(pid=d_id)
+        #执行删除操作
+        d_obj.delete()
+        #返回删除后的办面
+        return redirect("/publisher_list/")
+    else:
+        return HttpResponse("id不存在！")
+
 #编辑出版社
 def edit_publisher(request):
     if request.method=="POST":
